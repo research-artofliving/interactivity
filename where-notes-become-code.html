@@ -227,6 +227,50 @@ a.c-yt{text-decoration:none}
   .yt-fb{padding:8px 0 14px}
 }
 @media print{.yt-ov{display:none!important}}
+
+/* ───────── compact layout: for the narrow essay column (embedded) ───────── */
+.prnav{display:none}
+html.compact #frame{padding:16px 18px 14px}
+html.compact .controls{top:12px;right:14px;gap:6px}
+html.compact .icon-btn{width:30px;height:30px}html.compact .icon-btn svg{width:14px;height:14px}
+html.compact header{margin-bottom:6px;padding:0 96px}
+html.compact .kicker{font-size:9.5px;letter-spacing:.28em}
+html.compact h1{font-size:23px;margin:4px 0 2px}
+html.compact .sub{font-size:14.5px}
+html.compact .hint{display:none}
+html.compact .wheels{grid-template-columns:1fr 1fr;gap:18px}
+html.compact figure svg{max-width:100%}
+html.compact .cap{margin-top:2px}
+html.compact .ft{font-size:12.5px;letter-spacing:.14em}
+html.compact .fd{font-size:13px}html.compact .big{font-size:18px}
+html.compact .krow{margin-top:7px;padding-top:6px}
+html.compact .klbl{font-size:8.5px;letter-spacing:.18em;margin-bottom:5px}
+html.compact .chips,html.compact .chips:has(.bbg){gap:4px 3px}
+html.compact button.bbn{font-size:10.5px;padding:1px 4px 1px 5px}
+html.compact button.bbv{font-size:8px;padding:0 3px}
+html.compact .chip{padding:2px 7px 3px}html.compact .chip b{font-size:10.5px}html.compact .chip span{font-size:11px}
+html.compact .layer{margin-top:8px}html.compact .layer>summary{font-size:10px;padding:4px 0}
+html.compact .reading{gap:18px}html.compact .knote{font-size:12px}
+html.compact .emerge{margin-top:10px;padding-top:10px}
+html.compact .eh{margin-bottom:6px;align-items:center}
+html.compact .eh h2{font-size:13px;letter-spacing:.14em}html.compact .eh span{font-size:13px}
+html.compact .prnav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.prnav button{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);width:30px;height:26px;border-radius:999px;border:1px solid var(--ring-soft);background:var(--btn-bg);cursor:pointer;transition:all .15s}
+.prnav button:hover{color:var(--gold);border-color:var(--gold)}
+.prnav button.on{color:var(--ink);border-color:var(--gold);background:rgba(201,170,90,.18)}
+.prnav button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.prnav .pt{font-family:'Gentium Plus',serif;font-size:16px;color:var(--ink);margin-left:8px}
+html.compact .pr{border-top:0}
+html.compact .pr>summary{display:none}
+html.compact .pr:not([open]){display:none}
+html.compact .pb{grid-template-columns:1fr 1fr;gap:6px 22px;padding:0 0 4px;min-height:150px}
+html.compact .pb>span{display:none}
+html.compact .pb .side{font-size:8.5px}
+html.compact .pb p{font-size:13.5px;line-height:1.42}
+html.compact .math{font-size:12px}
+html.compact footer{margin-top:10px;padding-top:9px;font-size:10.5px;gap:8px 20px}
+html.compact footer{flex-wrap:nowrap}html.compact .fnotes{max-width:none;flex:1 1 auto;gap:2px}html.compact .credit{flex:0 0 auto}
+html.compact .credit img{width:34px;height:34px}html.compact .credit{gap:8px;font-size:10px}
 @media (max-width:960px){
   #frame{padding:72px 16px 24px}
   .controls{top:16px;right:16px}
@@ -702,6 +746,22 @@ document.getElementById('themeBtn').addEventListener('click',e=>{e.stopPropagati
 try{const t=localStorage.getItem('wnbc-theme');if(t)document.documentElement.dataset.theme=t;}catch(_){}
 drawAll();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawAll);
+
+/* compact layout for the essay column: two wheels side by side, principles as a stepper */
+(function(){
+  const root=document.documentElement,em=document.querySelector('.emerge'),P=[...document.querySelectorAll('.pr')];
+  const nav=document.createElement('div');nav.className='prnav';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Six shared strategies');
+  P.forEach((d,i)=>{const b=document.createElement('button');b.textContent=d.querySelector('.n').textContent;b.setAttribute('role','tab');
+    b.title=d.querySelector('.t').textContent;b.addEventListener('click',()=>{d.open=true;PRIDX=i;sync();});nav.appendChild(b);});
+  const pt=document.createElement('span');pt.className='pt';nav.appendChild(pt);
+  em.querySelector('.eh').after(nav);
+  function sync(){const i=P.findIndex(d=>d.open);[...nav.querySelectorAll('button')].forEach((b,j)=>{b.classList.toggle('on',j===i);b.setAttribute('aria-selected',j===i);});
+    pt.textContent=i>=0?P[i].querySelector('.t').textContent:'';}
+  P.forEach(d=>d.addEventListener('toggle',sync));
+  function fit(){const w=innerWidth,c=w>=560&&w<1100;root.classList.toggle('compact',c);
+    if(c&&!P.some(d=>d.open))P[0].open=true;sync();}
+  addEventListener('resize',fit);fit();
+})();
 </script>
 </body>
 </html>
