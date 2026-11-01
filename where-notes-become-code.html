@@ -90,6 +90,7 @@ svg.filtering .seg.on{opacity:1}
 button.bbn{font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:var(--ink);padding:2px 6px 2px 7px;border-radius:999px}
 button.bbv{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--muted);padding:1px 4px;border-radius:999px;border:1px solid var(--ring-soft)!important}
 button.bbn:hover,button.bbv:hover{color:var(--gold)}
+.tara{position:relative;display:inline-block}.tara::after{content:'';position:absolute;left:50%;top:-3px;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:currentColor}
 button.bbn.active,button.bbv.active{background:rgba(201,170,90,.22);color:var(--ink)}
 .snd{margin-top:8px}
 .snd>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);padding:4px 10px;border-radius:999px;border:1px dashed var(--ring-bold)}
@@ -631,7 +632,7 @@ function legend(){const L=isLight(),c=h=>L?shade(h,.25):h;
     vs.map(v=>`<button class="bbv key" ${K('raga','v:'+v)} data-play="${v}" title="${SWN[v]}">${v}</button>`).join('')+`</span>`;
   document.getElementById('raga-blocks').innerHTML=
     grp('Sa','Ṣaḍja','sw:SP','S',[])+grp('Ri','Ṛṣabha','sw:R','seq:R',['R1','R2','R3'])+grp('Ga','Gāndhāra','sw:G','seq:G',['G1','G2','G3'])+
-    grp('Ma','Madhyama','sw:M','seq:M',['M1','M2'])+grp('Pa','Pañcama','sw:SP','P',[])+grp('Da','Dhaivata','sw:D','seq:D',['D1','D2','D3'])+grp('Ni','Niṣāda','sw:N','seq:N',['N1','N2','N3']);
+    grp('Ma','Madhyama','sw:M','seq:M',['M1','M2'])+grp('Pa','Pañcama','sw:SP','P',[])+grp('Da','Dhaivata','sw:D','seq:D',['D1','D2','D3'])+grp('Ni','Niṣāda','sw:N','seq:N',['N1','N2','N3'])+grp('<span class="tara">S</span>a','Tāra Ṣaḍja: Sa an octave higher','sw:SP','Ṡ',[]);
   document.getElementById('codon-blocks').innerHTML=[['A','Adenine','A'],['T/U','Thymine · Uracil','U'],['G','Guanine','G'],['C','Cytosine','C']]
     .map(([k,n,bb])=>`<button class="chip key" ${K('codon','b:'+bb)} data-play="b${bb}"><i style="--c:${c(BASEC[bb])}"></i><b>${k}</b><span>${n}</span></button>`).join('');
   const tint=(h,o)=>{const n=parseInt(h.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;return `rgba(${r},${g},${b},${o})`;};
